@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { QuizProvider } from "./context/quizContext";
+
 import "./globals.css";
+import ClientLayout from "./ClientLayout";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-full bg-gray-100`}
       >
-        <QuizProvider>{children}</QuizProvider>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
