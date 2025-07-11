@@ -35,8 +35,8 @@ export default function IAMaturityQuiz() {
   const dimensionResults = analyzeDimensions(answers, dimensions);
 
   return (
-    <div className="min-h-screen py-3 px-4">
-      <div className="max-w-3xl mx-auto  shadow-lg rounded-xl p-8 border border-gray-200">
+    <div className="min-h-screen flex justify-center bg-gray-200 items-start p-8">
+      <div className="w-full max-w-3xl bg-white shadow-lg rounded-xl p-8 border border-gray-200">
         <h1 className="text-3xl font-semibold text-gray-800 mb-6">
           Questionário de Maturidade em IA
         </h1>
