@@ -15,7 +15,7 @@ export default function ResultsContent() {
 
   useEffect(() => {
     if (answers.length === 0) {
-      router.replace("/questions");
+      router.replace("/");
     } else {
       setScore(answers.reduce((a, b) => a + b, 0));
     }
@@ -34,7 +34,7 @@ export default function ResultsContent() {
         className="mt-6 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded transition"
         onClick={() => {
           resetAnswers();
-          router.push("/questions");
+          router.push("/");
         }}
       >
         🔁 Refazer questionário
