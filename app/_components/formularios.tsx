@@ -1,17 +1,55 @@
 "use client";
 
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+type FormData = {
+  nome: string;
+  email: string;
+  telefone: string;
+  cargo: string;
+  tamanho: string;
+};
+
 export default function UserForm() {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>();
+
+  const onSubmit = async (data: FormData) => {
+    console.log("Enviando dados:", data);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error("Erro ao enviar");
+
+      alert("Formulário enviado com sucesso!");
+      router.push("/contatos");
+    } catch (err) {
+      alert("Erro ao enviar formulário");
+    }
+  };
+
   return (
-    <form className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-gray-700">
           Nome completo
         </label>
         <input
-          type="text"
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+          {...register("nome", { required: "Nome é obrigatório" })}
           placeholder="Digite seu nome completo"
+          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
         />
+        {errors.nome && (
+          <p className="text-red-500 text-sm mt-1">{errors.nome.message}</p>
+        )}
       </div>
 
       <div>
@@ -20,9 +58,13 @@ export default function UserForm() {
         </label>
         <input
           type="email"
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+          {...register("email", { required: "E-mail é obrigatório" })}
           placeholder="Digite seu e-mail"
+          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
         />
+        {errors.email && (
+          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+        )}
       </div>
 
       <div>
@@ -31,9 +73,13 @@ export default function UserForm() {
         </label>
         <input
           type="tel"
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+          {...register("telefone", { required: "Telefone é obrigatório" })}
           placeholder="(00) 00000-0000"
+          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
         />
+        {errors.telefone && (
+          <p className="text-red-500 text-sm mt-1">{errors.telefone.message}</p>
+        )}
       </div>
 
       <div>
@@ -41,10 +87,13 @@ export default function UserForm() {
           Cargo / Função
         </label>
         <input
-          type="text"
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+          {...register("cargo", { required: "Cargo é obrigatório" })}
           placeholder="Ex: Gerente de TI"
+          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
         />
+        {errors.cargo && (
+          <p className="text-red-500 text-sm mt-1">{errors.cargo.message}</p>
+        )}
       </div>
 
       <div>
@@ -52,8 +101,9 @@ export default function UserForm() {
           Tamanho da Empresa (número de funcionários)
         </label>
         <select
-          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
+          {...register("tamanho", { required: "Selecione o tamanho" })}
           defaultValue=""
+          className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
         >
           <option value="" disabled>
             Selecione uma opção
@@ -64,14 +114,17 @@ export default function UserForm() {
           <option value="501-1000">501 a 1000 funcionários</option>
           <option value="acima-1000">Acima de 1000 funcionários</option>
         </select>
+        {errors.tamanho && (
+          <p className="text-red-500 text-sm mt-1">{errors.tamanho.message}</p>
+        )}
       </div>
+
       <button
-        disabled
-        className="w-full md:w-auto px-6 py-3 font-semibold text-white rounded-md 
-             bg-blue-600 hover:bg-blue-700 transition 
-             disabled:bg-gray-400 disabled:cursor-not-allowed"
+        type="submit"
+        disabled={isSubmitting}
+        className="w-full md:w-auto px-6 py-3 font-semibold text-white rounded-md bg-blue-600 hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
       >
-        Enviar
+        {isSubmitting ? "Enviando..." : "Enviar"}
       </button>
     </form>
   );
