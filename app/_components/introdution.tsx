@@ -6,17 +6,19 @@ export default function IntroAndUserForm() {
       {/* Coluna da esquerda: Introdução */}
       <div className="text-gray-800 space-y-4 p-8">
         <h2 className="text-2xl font-semibold">
-          Qual a maturidade para adotar inteligência artificial da sua empresa?
+          Qual a maturidade da sua empresa para adotar inteligência artificial?
         </h2>
         <p>
           Este questionário avalia de maneira geral a maturidade da sua
           organização em dados, tecnologia, processos, cultura e estratégia,
           permitindo identificar o estágio atual e apontar recomendações para
-          sua jornada de transformação com IA.
+          jornada de transformação com IA da sua organização. Responda com
+          seriedade as 15 perguntas e tenha um panorama ao final do
+          questionário.
         </p>
         <p>
-          Responda com seriedade as 15 perguntas e tenha um panorama breve ao
-          final do questionário.
+          Responda com seriedade as 15 perguntas e tenha um panorama ao final do
+          questionário.
         </p>
       </div>
 
