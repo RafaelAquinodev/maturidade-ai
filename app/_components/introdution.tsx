@@ -1,3 +1,4 @@
+import Image from "next/image";
 import IAMaturityQuiz from "./maturityQuizIa";
 
 export default function IntroAndUserForm() {
@@ -5,6 +6,14 @@ export default function IntroAndUserForm() {
     <div className="w-full bg-gray-100 rounded-none shadow-none grid grid-cols-1 md:grid-cols-2 gap-12">
       {/* Coluna da esquerda: Introdução */}
       <div className="text-gray-800 space-y-4 p-8">
+        <Image
+          src="/images/maturidade-logo.jpg"
+          alt="Descrição da imagem"
+          width={600}
+          height={400}
+          className="rounded-md shadow-md mb-6"
+        />
+
         <h2 className="text-2xl font-semibold">
           Qual a maturidade da sua empresa para adotar inteligência artificial?
         </h2>
@@ -23,7 +32,7 @@ export default function IntroAndUserForm() {
       </div>
 
       {/* Coluna da direita: Formulário de dados pessoais */}
-      <div className="space-y-6  ">
+      <div className="space-y-6 p-8">
         <IAMaturityQuiz />
       </div>
     </div>
