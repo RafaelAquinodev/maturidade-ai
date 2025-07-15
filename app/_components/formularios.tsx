@@ -2,6 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { useState } from "react";
 type FormData = {
   nome: string;
   email: string;
@@ -12,6 +14,14 @@ type FormData = {
 
 export default function UserForm() {
   const router = useRouter();
+  const [telefoneFormatado, setTelefoneFormatado] = useState("");
+  const formatarTelefone = (valor: string) => {
+    return valor
+      .replace(/\D/g, "")
+      .replace(/^(\d{2})(\d)/, "($1) $2")
+      .replace(/(\d{5})(\d)/, "$1-$2")
+      .replace(/(-\d{4})\d+?$/, "$1");
+  };
   const {
     register,
     handleSubmit,
@@ -19,20 +29,21 @@ export default function UserForm() {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    console.log("Enviando dados:", data);
+    const telefoneSemMascara = telefoneFormatado.replace(/\D/g, "");
+    // console.log("Enviando dados:", data);
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, telefone: telefoneSemMascara }),
       });
 
       if (!res.ok) throw new Error("Erro ao enviar");
 
-      alert("Formulário enviado com sucesso!");
-      router.push("/contatos");
+      toast.success("Cadastro realizado com sucesso!");
+      router.push("/");
     } catch (err) {
-      alert("Erro ao enviar formulário");
+      toast.error("Error ao cadastrar");
     }
   };
 
@@ -73,7 +84,10 @@ export default function UserForm() {
         </label>
         <input
           type="tel"
-          {...register("telefone", { required: "Telefone é obrigatório" })}
+          value={telefoneFormatado}
+          onChange={(e) =>
+            setTelefoneFormatado(formatarTelefone(e.target.value))
+          }
           placeholder="(00) 00000-0000"
           className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500"
         />

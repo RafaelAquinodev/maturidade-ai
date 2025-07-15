@@ -18,6 +18,19 @@ export default function ContactsPage() {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const formatarTelefone = (telefone: string) => {
+    const numeros = telefone.replace(/\D/g, "");
+
+    if (numeros.length === 11) {
+      return numeros.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+    }
+
+    if (numeros.length === 10) {
+      return numeros.replace(/^(\d{2})(\d{4})(\d{4})$/, "($1) $2-$3");
+    }
+
+    return telefone;
+  };
 
   useEffect(() => {
     async function fetchContacts() {
@@ -62,7 +75,7 @@ export default function ContactsPage() {
               </p>
               <p>
                 <strong className="font-semibold">Telefone:</strong>{" "}
-                {contact.telefone}
+                {formatarTelefone(contact.telefone)}
               </p>
               <p>
                 <strong className="font-semibold">Cargo:</strong>{" "}

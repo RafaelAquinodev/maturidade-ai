@@ -17,7 +17,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const data = await req.json();
-  console.log("Recebido no backend:", data);
+  // console.log("Recebido no backend:", data);
 
   try {
     const lead = await prisma.contact.create({
