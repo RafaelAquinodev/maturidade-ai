@@ -42,7 +42,7 @@ export default function UserForm() {
 
       toast.success("Cadastro realizado com sucesso!");
       router.push("/");
-    } catch (err) {
+    } catch {
       toast.error("Error ao cadastrar");
     }
   };
